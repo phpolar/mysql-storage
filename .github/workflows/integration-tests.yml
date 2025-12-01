@@ -5,6 +5,11 @@ jobs:
     integration_tests:
         name: Integration Tests
         runs-on: ubuntu-latest
+        env:
+            MYSQL_DATABASE: integration_test_data
+            MYSQL_USER: integration_test
+            MYSQL_PASSWORD: integration_test1234$$$!!
+            MYSQL_RANDOM_ROOT_PASSWORD: 1
         steps:
             - uses: actions/checkout@v4
             - name: Setup PHP
@@ -25,14 +30,14 @@ jobs:
               run: composer install --no-ansi --no-interaction --prefer-dist --no-progress --ignore-platform-req=ext-ast
             - name: Run integration tests
               run: composer ci:integration
-        env:
-            MYSQL_DATABASE: integration_test_data
-            MYSQL_USER: integration_test
-            MYSQL_PASSWORD: integration_test1234$$$!!
-            MYSQL_RANDOM_ROOT_PASSWORD: 1
         services:
           mysql:
             image: mysql:latest
+            env:
+              MYSQL_DATABASE: $MYSQL_DATABASE
+              MYSQL_USER: $MYSQL_USER
+              MYSQL_PASSWORD: $MYSQL_PASSWORD
+              MYSQL_RANDOM_ROOT_PASSWORD: $MYSQL_RANDOM_ROOT_PASSWORD
             ports:
               - 3306/tcp
             options: >-
