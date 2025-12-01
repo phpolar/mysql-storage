@@ -31,6 +31,7 @@ final class MySqlStorageIntegrationTest extends TestCase
         $host = \getenv("MYSQL_HOST");
         $user =  \getenv("MYSQL_USER");
         $password = \getenv("MYSQL_PASSWORD");
+        $port = \getenv("MYSQL_PORT");
 
         if (\is_string($user) === false) {
             throw new Exception("The 'MYSQL_USER' env variable must be set when running this test.");
@@ -40,11 +41,17 @@ final class MySqlStorageIntegrationTest extends TestCase
             throw new Exception("The 'MYSQL_PASSWORD' env variable must be set when running this test.");
         }
 
+        if (\is_string($port) === false) {
+            throw new Exception("The 'MYSQL_PORT' env variable must be set when running this test.");
+        }
+
+
         $this->realConnection = new Mysql(
             dsn: sprintf(
-                "mysql:dbname=%s;host=%s",
+                "mysql:dbname=%s;host=%s:%d",
                 $dbName,
-                $host
+                $host,
+                $port,
             ),
             username: $user,
             password: $password,
