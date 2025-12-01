@@ -11,7 +11,7 @@
   requireCoverageMetadata="false"
   beStrictAboutCoverageMetadata="false">
   <testsuites>
-    <testsuite name="default">
+    <testsuite name="ci">
       <directory>tests/acceptance</directory>
       <directory>tests/unit</directory>
     </testsuite>
