@@ -7,6 +7,7 @@ jobs:
         runs-on: ubuntu-latest
         env:
             MYSQL_DATABASE: integration_test_data
+            MYSQL_HOST: "127.0.0.1"
             MYSQL_USER: integration_test
             MYSQL_PASSWORD: integration_test1234$$$!!
             MYSQL_RANDOM_ROOT_PASSWORD: 1
