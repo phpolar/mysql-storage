@@ -82,8 +82,8 @@ class Person extends AbstractModel
 
 ## Thresholds
 
-|      Module    |Source Code Size * |Memory Usage|  Required |
-|----------------|-------------------|------------|-----------|
-|     phpolar/mysql-storage    |       9 kB       |   150 kB   |      x    |
+|      Module                  |Source Code Size *  |Memory Usage |  Required |
+|------------------------------|--------------------|-------------|-----------|
+|     phpolar/mysql-storage    |       900 B        |   110 kB    |      x    |
 
 * Note: Does not include comments.
