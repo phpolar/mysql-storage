@@ -1,0 +1,78 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "phpolar/mysql-storage",
+    "description": "Adds support for MySQL storage in your application.",
+    "type": "library",
+    "require-dev": {
+        "ext-ast": "*",
+        "ext-openssl": "*",
+        "phan/phan": "^5.4",
+        "php-coveralls/php-coveralls": "^2.5",
+        "phpmd/phpmd": "^2.13",
+        "phpstan/phpstan": "^2.0.3",
+        "phpunit/phpunit": "^12",
+        "squizlabs/php_codesniffer": "^4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phpolar\\MySqlStorage\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Phpolar\\MySqlStorage\\TestClasses\\": "tests/TestClasses/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": ">=8.4",
+        "ext-pdo_mysql": "*",
+        "phpolar/storage": "^7.0"
+    },
+    "license": "MIT",
+    "scripts": {
+        "analyze": "XDEBUG_MODE=off phpstan analyze src --level 9",
+        "analyze:strict": "phan --no-progress-bar --strict-type-checking --analyze-twice --color --output-mode=text --color-scheme=light",
+        "analyze:dead-code": "@analyze:strict --color-scheme=light --config-file=.phan/config_deadcode.php",
+        "check": [
+            "@lint -q",
+            "@analyze -q",
+            "@test:unit",
+            "@semgrep",
+            "@smell"
+        ],
+        "ci:analyze": "@analyze",
+        "ci:lint": "@lint",
+        "ci:lint-fix": "@lint-fix",
+        "ci:test": "XDEBUG_MODE=coverage composer exec \"@test --configuration=phpunit.ci.xml --coverage-clover=build/logs/clover.xml\"",
+        "ci:test-build": "@test --configuration=phpunit.ci.xml",
+        "ci:generate-coverage-badge": [
+            "@test --configuration=phpunit.coverage.xml",
+            "composer exec \"php-coveralls -v\""
+        ],
+        "lint": "phpcs",
+        "lint-fix": "phpcbf",
+        "start:test": [
+            "Composer\\Config::disableProcessTimeout",
+            "watch -n 30 -cx vendor/bin/phpunit --color=always --testsuite unit"
+        ],
+        "semgrep": "semgrep --lang php  ./src",
+        "smell": "phpmd ./src ansi design,cleancode,codesize,naming",
+        "test": "phpunit --color=always",
+        "acceptance-report-subheadings": [
+            "sed -i -E 's/^(\\S)/## \\1/' acceptance-test-results.md",
+            "sed -i -E 's/^(## .*)$/\\1\\n/' acceptance-test-results.emd"
+        ],
+        "acceptance-report-format": "sed -i -E -e '1i # Acceptance Test Report\\n' -e 's/^(\\S)/## \\1/' -e 's/^(## .*)$/\\1\\n/' -e 's/^ \\[/- [/' -e '$d' acceptance-test-results.md",
+        "test:acceptance": "@test --configuration=phpunit.dev.xml --testsuite acceptance",
+        "test:acceptance:report": [
+            "@test:acceptance --testdox-text acceptance-test-results.md",
+            "@acceptance-report-format"
+        ],
+        "test:unit": "@test --configuration=phpunit.dev.xml --testsuite unit",
+        "test:integration": "@test --configuration=phpunit.dev.xml --testsuite integration",
+        "test:coverage": "XDEBUG_MODE=coverage composer exec \"@test --configuration=phpunit.coverage.xml --coverage-html build/coverage\""
+    }
+}

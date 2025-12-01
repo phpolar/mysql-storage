@@ -1,0 +1,15 @@
+name: Build Check
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - '**.php'
+      - '.github/workflows/push.yml'
+      - 'composer.lock'
+      - 'phpunit*.xml'
+jobs:
+  coverage:
+    uses: phpolar/github-workflows/.github/workflows/coverage.yml@v1
+  os_build_check:
+    uses: ./.github/workflows/os-build-check.yml

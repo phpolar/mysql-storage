@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    bootstrap="vendor/autoload.php"
+    executionOrder="depends,defects"
+    beStrictAboutOutputDuringTests="true"
+    failOnRisky="true"
+    failOnWarning="false"
+    colors="true"
+    cacheDirectory=".phpunit.cache"
+    requireCoverageMetadata="true"
+    beStrictAboutCoverageMetadata="true">
+  <testsuites>
+    <testsuite name="default">
+      <directory>tests/unit</directory>
+    </testsuite>
+    <testsuite name="acceptance">
+      <directory>tests/acceptance</directory>
+    </testsuite>
+    <testsuite name="integration">
+      <directory>tests/integration</directory>
+    </testsuite>
+    <testsuite name="unit">
+      <directory>tests/unit</directory>
+    </testsuite>
+  </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </source>
+  <php>
+    <const name="SRC_GLOB" value="/src/*.php" />
+    <const name="PROJECT_SIZE_THRESHOLD" value="900" />
+    <const name="PROJECT_MEMORY_USAGE_THRESHOLD" value="110000" />
+  </php>
+</phpunit>
