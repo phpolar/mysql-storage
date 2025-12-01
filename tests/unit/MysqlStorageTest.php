@@ -93,7 +93,7 @@ final class MySqlStorageTest extends TestCase
             ->method("query")
             ->with(
                 <<<SQL
-                TABLE "test_table";
+                TABLE `test_table`;
                 SQL,
                 PDO::FETCH_CLASS,
                 TestClassWithPrimaryKey::class,
@@ -188,7 +188,7 @@ final class MySqlStorageTest extends TestCase
             ->method("query")
             ->with(
                 <<<SQL
-                TABLE "test_table";
+                TABLE `test_table`;
                 SQL,
                 PDO::FETCH_CLASS,
                 TestClassWithPrimaryKey::class,
@@ -210,7 +210,7 @@ final class MySqlStorageTest extends TestCase
         );
 
         $sut->save(
-            $item->getPrimaryKey(),
+            (string) $item->getPrimaryKey(),
             $item,
         );
 
@@ -252,7 +252,7 @@ final class MySqlStorageTest extends TestCase
             ->method("query")
             ->with(
                 <<<SQL
-                TABLE "test_table";
+                TABLE `test_table`;
                 SQL,
                 PDO::FETCH_CLASS,
                 TestClassWithPrimaryKey::class,
@@ -309,7 +309,7 @@ final class MySqlStorageTest extends TestCase
             ->method("query")
             ->with(
                 <<<SQL
-                TABLE "test_table";
+                TABLE `test_table`;
                 SQL,
                 PDO::FETCH_CLASS,
                 TestClassWithPrimaryKey::class,
@@ -345,7 +345,7 @@ final class MySqlStorageTest extends TestCase
             ->method("query")
             ->with(
                 <<<SQL
-                TABLE "test_table";
+                TABLE `test_table`;
                 SQL,
                 PDO::FETCH_CLASS,
                 TestClassWithPrimaryKey::class,
