@@ -46,8 +46,9 @@
         "ci:analyze": "@analyze",
         "ci:lint": "@lint",
         "ci:lint-fix": "@lint-fix",
-        "ci:test": "XDEBUG_MODE=coverage composer exec \"@test --configuration=phpunit.ci.xml --coverage-clover=build/logs/clover.xml\"",
-        "ci:test-build": "@test --configuration=phpunit.ci.xml",
+        "ci:test": "XDEBUG_MODE=coverage composer exec \"@test --configuration=phpunit.ci.xml --testsuite ci --coverage-clover=build/logs/clover.xml\"",
+        "ci:test-build": "@test --configuration=phpunit.ci.xml --testsuite ci",
+        "ci:test-integration": "@test --configuration=phpunit.ci.xml --testsuite integration",
         "ci:generate-coverage-badge": [
             "@test --configuration=phpunit.coverage.xml",
             "composer exec \"php-coveralls -v\""

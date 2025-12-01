@@ -14,7 +14,7 @@ permissions:
   security-events: write
 jobs:
   integration_tests:
-    uses: ./github/workflows/integration-tests.yml
+    uses: ./.github/workflows/integration-tests.yml
   PHPMD:
     uses: phpolar/github-workflows/.github/workflows/phpmd.yml@v1
     secrets: inherit
