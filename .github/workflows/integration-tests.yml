@@ -29,15 +29,15 @@ jobs:
             - name: Install dependencies
               run: composer install --no-ansi --no-interaction --prefer-dist --no-progress --ignore-platform-req=ext-ast
             - name: Run integration tests
-              run: composer ci:integration
+              run: composer ci:test-integration
         services:
           mysql:
             image: mysql:latest
             env:
-              MYSQL_DATABASE: $MYSQL_DATABASE
-              MYSQL_USER: $MYSQL_USER
-              MYSQL_PASSWORD: $MYSQL_PASSWORD
-              MYSQL_RANDOM_ROOT_PASSWORD: $MYSQL_RANDOM_ROOT_PASSWORD
+              MYSQL_DATABASE: integration_test_data
+              MYSQL_USER: integration_test
+              MYSQL_PASSWORD: integration_test1234$$$!!
+              MYSQL_RANDOM_ROOT_PASSWORD: 1
             ports:
               - 3306/tcp
             options: >-
