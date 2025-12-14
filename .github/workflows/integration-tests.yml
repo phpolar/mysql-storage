@@ -2,50 +2,53 @@ name: Integration Tests
 on:
   workflow_call:
 jobs:
-    integration_tests:
-        name: Integration Tests
-        runs-on: ubuntu-latest
-        strategy:
-          fail-fast: false
+  integration_tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        operating-system:
+          - "ubuntu-latest"
+      fail-fast: false
+    env:
+      MYSQL_DATABASE: integration_test_data
+      MYSQL_HOST: "127.0.0.1"
+      MYSQL_PORT: "32768"
+      MYSQL_USER: integration_test
+      MYSQL_PASSWORD: integration_test1234$$$!!
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.4
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+      - name: Install dependencies
+        run: composer install --no-ansi --no-interaction --prefer-dist --no-progress --ignore-platform-req=ext-ast
+      - name: Run integration tests
+        run: composer ci:test-integration
+    services:
+      mysql:
+        image: mysql:latest
         env:
-            MYSQL_DATABASE: integration_test_data
-            MYSQL_HOST: "127.0.0.1"
-            MYSQL_PORT: "32768"
-            MYSQL_USER: integration_test
-            MYSQL_PASSWORD: integration_test1234$$$!!
-            MYSQL_RANDOM_ROOT_PASSWORD: 1
-        steps:
-            - uses: actions/checkout@v6
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                php-version: 8.4
-            - name: Get composer cache directory
-              id: composer-cache
-              run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-            - name: Cache Composer packages
-              uses: actions/cache@v4
-              with:
-                path: vendor
-                key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-                restore-keys: |
-                  ${{ runner.os }}-php-
-            - name: Install dependencies
-              run: composer install --no-ansi --no-interaction --prefer-dist --no-progress --ignore-platform-req=ext-ast
-            - name: Run integration tests
-              run: composer ci:test-integration
-        services:
-          mysql:
-            image: mysql:latest
-            env:
-              MYSQL_DATABASE: integration_test_data
-              MYSQL_USER: integration_test
-              MYSQL_PASSWORD: integration_test1234$$$!!
-              MYSQL_RANDOM_ROOT_PASSWORD: 1
-            ports:
-              - 3306/tcp
-            options: >-
-                --health-cmd="mysqladmin ping"
-                --health-interval=10s
-                --health-timeout=5s
-                --health-retries=3
+          MYSQL_DATABASE: integration_test_data
+          MYSQL_USER: integration_test
+          MYSQL_PASSWORD: integration_test1234$$$!!
+          MYSQL_RANDOM_ROOT_PASSWORD: 1
+        ports:
+          - 3306/tcp
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
