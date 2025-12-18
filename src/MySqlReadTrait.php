@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Phpolar\MySqlStorage;
 
-use IteratorAggregate;
 use PDO;
 use Pdo\Mysql;
 
@@ -20,7 +19,7 @@ trait MySqlReadTrait
     public function load(): void
     {
         /**
-         * @var IteratorAggregate
+         * @var \IteratorAggregate
          */
         $rows = $this->connection->query(
             <<<SQL

@@ -77,9 +77,8 @@ final class MySqlStorageTest extends TestCase
     public function loading(array $data)
     {
         $connectionMock = $this->createMock(Mysql::class);
-        $stmtMock = $this->createMock(PDOStatement::class);
+        $stmtMock = $this->createStub(PDOStatement::class);
         $stmtMock
-            ->expects($this->any())
             ->method("getIterator")
             ->willReturn(
                 new ArrayIterator(

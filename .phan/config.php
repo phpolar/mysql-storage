@@ -42,15 +42,15 @@ return [
     // and checks for undefined classes/methods/functions)
     //
     // Supported values: `'5.6'`, `'7.0'`, `'7.1'`, `'7.2'`, `'7.3'`, `'7.4'`,
-    // `'8.0'`, `'8.1'`, `null`.
+    // `'8.0'`, `'8.1'`, `'8.2'`, `'8.3'`, `'8.4'`, `null`.
     // If this is set to `null`,
     // then Phan assumes the PHP version which is closest to the minor version
     // of the php executable used to execute Phan.
     //
     // Note that the **only** effect of choosing `'5.6'` is to infer that functions removed in php 7.0 exist.
     // (See `backward_compatibility_checks` for additional options)
-    // TODO: Choose a target_php_version for this project, or leave as null and remove this comment
-    'target_php_version' => null,
+    // Automatically inferred from composer.json requirement for "php" of ">=8.4"
+    'target_php_version' => '8.4',
 
     // If enabled, missing properties will be created when
     // they are first seen. If false, we'll report an
@@ -161,7 +161,7 @@ return [
     // If true, check to make sure the return type declared
     // in the doc-block (if any) matches the return type
     // declared in the method signature.
-    'check_annotation_signature_return_type_match' => false,
+    'check_docblock_signature_return_type_match' => false,
 
     // This setting maps case-insensitive strings to union types.
     //
@@ -340,8 +340,11 @@ return [
     // your application should be included in this list.
     'directory_list' => [
         'src',
-        'vendor/psr',
-        'vendor/phpolar',
+        'vendor/phan/phan/src/Phan',
+        'vendor/php-coveralls/php-coveralls/src',
+        'vendor/phpmd/phpmd/src/main/php',
+        'vendor/phpolar/storage/src',
+        'vendor/phpunit/phpunit/src',
     ],
 
     // A list of individual files to include in analysis

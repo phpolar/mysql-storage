@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Phpolar\MySqlStorage;
 
+use DateTimeImmutable;
 use Pdo\Mysql;
+use Stringable;
 
 /**
  * Automatically persist data to the database.
@@ -22,7 +24,7 @@ trait MySqlWriteTrait
          */
         $items = $this->findAll();
 
-        if (count($this) < 1) {
+        if ($this->count() < 1) {
             return;
         }
 
@@ -66,7 +68,9 @@ trait MySqlWriteTrait
 
         foreach ($itemsToUpsert as $item) {
             $stmt->execute(
-                \get_object_vars($item)
+                $this->convertObjVars(
+                    \get_object_vars($item)
+                )
             );
         }
     }
@@ -97,6 +101,30 @@ trait MySqlWriteTrait
 
         $stmt->execute($ids);
     }
+
+    /**
+     * @param array<string,mixed> $objVars
+     * @return array<string,string|bool|float|int|null>
+     */
+    private function convertObjVars(array $objVars): array
+    {
+        return array_map(
+            static fn(mixed $item) => match (true) {
+                $item instanceof DateTimeImmutable => $item->format(DATE_ATOM),
+                $item instanceof Stringable => (string) $item,
+                is_scalar($item) => $item,
+                is_array($item) => json_encode($item),
+                is_object($item) => serialize($item),
+                $item === null => $item,
+                default => null,
+            },
+            $objVars,
+        );
+    }
+
+    abstract public function clear(): void;
+
+    abstract public function count(): int;
 
     abstract public function findAll(): array;
 }

@@ -2,7 +2,7 @@
 
 ## Memory Usage (Phpolar\Phpolar\MemoryUsage)
 
-- [x] Memory usage shall be below 110000 bytes
+- [x] Memory usage shall be below 118999 bytes
 
 ## Project Size (Phpolar\Phpolar\ProjectSize)
 
