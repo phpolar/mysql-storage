@@ -11,6 +11,10 @@ use Phpolar\Storage\{
     Persistable
 };
 
+/**
+ * A set of actions that will be executed when the defined
+ * events occur.
+ */
 final readonly class MySqlStorageLifeCycleHooks implements InitHook, DestroyHook
 {
     public function __construct(

@@ -262,6 +262,9 @@ return [
     // to this list to inhibit them from being reported.
     'suppress_issue_types' => [
         'PhanUnreferencedPublicMethod',
+        'PhanWriteOnlyPrivateProperty',
+        'PhanPluginNoCommentOnPublicMethod',
+        'PhanUnreferencedPrivateProperty',
         'PhanUnreferencedClass',
         'PhanPluginNoCommentOnPrivateProperty',
         'PhanPluginNoCommentOnProtectedProperty',
@@ -352,6 +355,11 @@ return [
     // your application should be included in this list.
     'directory_list' => [
         'src',
+        'vendor/phan/phan/src/Phan',
+        'vendor/php-coveralls/php-coveralls/src',
+        'vendor/phpmd/phpmd/src/main/php',
+        'vendor/phpolar/storage/src',
+        'vendor/phpunit/phpunit/src',
     ],
 
     // A list of individual files to include in analysis
