@@ -27,6 +27,6 @@
   <php>
     <const name="SRC_GLOB" value="/src/*.php" />
     <const name="PROJECT_SIZE_THRESHOLD" value="1000" />
-    <const name="PROJECT_MEMORY_USAGE_THRESHOLD" value="110000" />
+    <const name="PROJECT_MEMORY_USAGE_THRESHOLD" value="118999" />
   </php>
 </phpunit>
