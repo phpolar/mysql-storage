@@ -199,6 +199,7 @@ final class MySqlStorageTest extends TestCase
             ->willReturnOnConsecutiveCalls(
                 $stmtMock,
                 $this->createStub(PDOStatement::class),
+                $stmtMock,
             );
 
         $item = new TestClassWithPrimaryKey($data);
@@ -261,7 +262,8 @@ final class MySqlStorageTest extends TestCase
             ->method("prepare")
             ->willReturnOnConsecutiveCalls(
                 $this->createStub(PDOStatement::class),
-                $stmtMock
+                $stmtMock,
+                $stmtMock,
             );
         $stmtMock
             ->expects($this->once())
