@@ -6,11 +6,11 @@ namespace Phpolar\MySqlStorage\TestClasses;
 
 final class TestClassWithoutPrimaryKey
 {
-    public string $id;
+    public int $id;
     public string $name;
 
     /**
-     * @param array<string,string> $data
+     * @param array{'id': int, 'name': string} $data
      */
     public function __construct(array $data)
     {

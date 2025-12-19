@@ -29,7 +29,7 @@ final class MemoryUsageTest extends TestCase
             ->method("getIterator")
             ->willReturn(new ArrayIterator([
                 new TestClassWithPrimaryKey([
-                    "id" => "id1",
+                    "id" => 1,
                     "name" => "name1",
                 ]),
             ]));
@@ -53,7 +53,7 @@ final class MemoryUsageTest extends TestCase
         $sut->save(
             "2",
             new TestClassWithPrimaryKey([
-                "id" => "2",
+                "id" => 2,
                 "name" => "name2"
             ])
         );
