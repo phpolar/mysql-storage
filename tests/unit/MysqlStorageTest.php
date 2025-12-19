@@ -44,23 +44,23 @@ final class MySqlStorageTest extends TestCase
     public function countability()
     {
         $this->sut->save(
-            key: "id1",
+            key: "1",
             data: new TestClassWithPrimaryKey([
-                "id" => "id1",
+                "id" => 1,
                 "name" => "name1"
             ]),
         );
         $this->sut->save(
-            key: "id2",
+            key: "2",
             data: new TestClassWithPrimaryKey([
-                "id" => "id2",
+                "id" => 2,
                 "name" => "name2"
             ]),
         );
         $this->sut->save(
-            key: "id3",
+            key: "3",
             data: new TestClassWithPrimaryKey([
-                "id" => "id3",
+                "id" => 3,
                 "name" => "name3"
             ]),
         );
@@ -73,7 +73,7 @@ final class MySqlStorageTest extends TestCase
 
     #[Test]
     #[TestDox("Shall load items from the database")]
-    #[TestWith([["id" => "id1", "name" => "name1"]])]
+    #[TestWith([["id" => 1, "name" => "name1"]])]
     public function loading(array $data)
     {
         $connectionMock = $this->createMock(Mysql::class);
@@ -110,7 +110,7 @@ final class MySqlStorageTest extends TestCase
 
     #[Test]
     #[TestDox("Shall use id property if getPrimaryKey method does not exist")]
-    #[TestWith([["id" => "id1", "name" => "name1"]])]
+    #[TestWith([["id" => 1, "name" => "name1"]])]
     public function loadswithid(array $data)
     {
         $item1 = new TestClassWithoutPrimaryKey($data);
@@ -133,7 +133,7 @@ final class MySqlStorageTest extends TestCase
             typeClassName: TestClassWithoutPrimaryKey::class
         );
 
-        $this->assertSame("id1", $sut->findKey($item1));
+        $this->assertSame(1, $sut->findKey($item1));
     }
 
     #[Test]
@@ -166,8 +166,8 @@ final class MySqlStorageTest extends TestCase
 
     #[Test]
     #[TestDox("Shall persist items to the database")]
-    #[TestWith([["id" => "id1", "name" => "name1"]])]
-    #[TestWith([["id" => "id2", "name" => "name2"]])]
+    #[TestWith([["id" => 1, "name" => "name1"]])]
+    #[TestWith([["id" => 2, "name" => "name2"]])]
     public function persists(array $data)
     {
         $connectionStub = $this->createStub(Mysql::class);
@@ -225,12 +225,12 @@ final class MySqlStorageTest extends TestCase
     #[TestDox("Shall persist items to the database")]
     #[TestWith([
         [
-            ["id" => "id1", "name" => "name1"],
-            ["id" => "id2", "name" => "name2"],
-            ["id" => "id3", "name" => "name3"],
-            ["id" => "id4", "name" => "name4"],
+            ["id" => 1, "name" => "name1"],
+            ["id" => 2, "name" => "name2"],
+            ["id" => 3, "name" => "name3"],
+            ["id" => 4, "name" => "name4"],
         ],
-        ["id2", "id4"],
+        [2, 4],
     ])]
     public function deletes(array $items, array $idsToRemove)
     {

@@ -6,7 +6,7 @@ namespace Phpolar\MySqlStorage\TestClasses;
 
 final class TestClassWithPrimaryKey
 {
-    public string|int $id;
+    public int $id;
     public string $name;
 
     /**

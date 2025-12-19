@@ -100,6 +100,9 @@ final class MySqlStorageIntegrationTest extends TestCase
          */
         $item3 = $this->sut->find(3)->orElse(static fn() => $this->assertTrue(false))->tryUnwrap();
 
+        $this->assertSame(1, $item1->id);
+        $this->assertSame(2, $item2->id);
+        $this->assertSame(3, $item3->id);
         $this->assertSame("name1", $item1->name);
         $this->assertSame("name2", $item2->name);
         $this->assertSame("name3", $item3->name);

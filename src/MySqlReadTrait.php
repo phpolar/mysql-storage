@@ -27,12 +27,12 @@ trait MySqlReadTrait
             SQL,
             PDO::FETCH_CLASS,
             $this->typeClassName,
-            [],
         );
+
 
         /**
          * @var object $row
-         */
+        */
         foreach ($rows as $row) {
             $this->save(
                 key: $this->getPrimaryKey($row),

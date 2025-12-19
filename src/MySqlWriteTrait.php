@@ -86,7 +86,13 @@ trait MySqlWriteTrait
         $placeholders = join(", ", \array_fill(0, count($ids), "?"));
 
         $stmt = $this->connection->prepare(
-            <<<SQL
+            count($ids) === 0
+                ?
+                <<<SQL
+            TRUNCATE `{$this->tableName}`
+            SQL
+                :
+                <<<SQL
             DELETE FROM `{$this->tableName}`
             WHERE `id` NOT IN ($placeholders);
             SQL
