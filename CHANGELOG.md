@@ -1,5 +1,11 @@
 # PHPolar MySql Storage Change History
 
+## 1.0.2 (2025-12-19)
+
+### Fix
+
+- delete the last item (#13)
+
 ## 1.0.1 (2025-12-18)
 
 ### Fix
