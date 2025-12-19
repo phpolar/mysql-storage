@@ -222,7 +222,7 @@ final class MySqlStorageTest extends TestCase
 
 
     #[Test]
-    #[TestDox("Shall persist items to the database")]
+    #[TestDox("Shall delete items from the database")]
     #[TestWith([
         [
             ["id" => 1, "name" => "name1"],
@@ -316,8 +316,9 @@ final class MySqlStorageTest extends TestCase
             ->willReturn($stmtStub);
 
         $connectionMock
-            ->expects($this->never())
-            ->method("prepare");
+            ->expects($this->once())
+            ->method("prepare")
+            ->with("TRUNCATE `test_table`");
 
         $sut = new MySqlStorage(
             connection: $connectionMock,
