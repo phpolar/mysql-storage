@@ -24,10 +24,6 @@ trait MySqlWriteTrait
          */
         $items = $this->findAll();
 
-        if ($this->count() < 1) {
-            return;
-        }
-
         $this->upsertItems(itemsToUpsert: $items);
         $this->deleteRemovedItems(itemsToKeep: $items);
     }
@@ -39,6 +35,9 @@ trait MySqlWriteTrait
      */
     private function upsertItems(array $itemsToUpsert): void
     {
+        if ($this->count() < 1) {
+            return;
+        }
         $columns = \array_keys(\get_object_vars($itemsToUpsert[0]));
         $columnNames = join(", ", array_map(static fn(string $col) => sprintf("`%s`", $col), $columns));
 
